@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<!-- saved from url=(0171)file:///C:/Users/kavip/AppData/Local/Packages/5319275A.WhatsAppDesktop_cv1g1gvanyjgm/LocalState/sessions/80AB2BDBF38C9495562A4240C1E8C9B673AEA46F/transfers/2026-14/ai.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PharmAudit Pro — Pharmacy Audit Dashboard</title>
+<script src="./PharmAudit_files/xlsx.full.min.js.download"></script>
+<script src="./PharmAudit_files/jspdf.umd.min.js.download"></script>
+<script src="./PharmAudit_files/jspdf.plugin.autotable.min.js.download"></script>
+<script src="./PharmAudit_files/chart.umd.min.js.download"></script>
+<style>
+:root{--primary:#1a4a6e;--primary-light:#2563a8;--accent:#0ea5e9;--success:#16a34a;--warning:#d97706;--danger:#dc2626;--bg:#f0f4f8;--card:#ffffff;--border:#d1dce7;--text:#1e293b;--muted:#64748b;--font:'Segoe UI',system-ui,sans-serif;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;}
+.header{background:var(--primary);color:#fff;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:64px;border-bottom:3px solid var(--accent);}
+.header-logo{width:38px;height:38px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:20px;}
+.badge-live{background:#16a34a;color:#fff;font-size:11px;padding:3px 10px;border-radius:20px;font-weight:600;}
+.container{max-width:1300px;margin:0 auto;padding:1.5rem 2rem;}
+.tabs{display:flex;gap:4px;background:var(--card);border-radius:10px;padding:5px;border:1px solid var(--border);margin-bottom:1.5rem;flex-wrap:wrap;}
+.tab{padding:8px 15px;border-radius:7px;border:none;background:none;font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;transition:all 0.2s;white-space:nowrap;}
+.tab.active{background:var(--primary);color:#fff;}
+.tab:hover:not(.active){background:var(--bg);color:var(--text);}
+.section{display:none;}.section.active{display:block;}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem 1.5rem;margin-bottom:1.5rem;}
+.card-title{font-size:14px;font-weight:600;color:var(--primary);margin-bottom:1rem;display:flex;align-items:center;gap:8px;}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:1.5rem;}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1rem 1.25rem;}
+.stat-label{font-size:12px;color:var(--muted);margin-bottom:4px;}
+.stat-value{font-size:26px;font-weight:700;color:var(--primary);}
+.stat-sub{font-size:11px;color:var(--muted);margin-top:3px;}
+.stat-ok .stat-value{color:var(--success);}.stat-warn .stat-value{color:var(--warning);}.stat-danger .stat-value{color:var(--danger);}
+.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1.5rem;}
+.chart-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem;margin-bottom:1.5rem;}
+@media(max-width:900px){.chart-grid,.chart-grid-3{grid-template-columns:1fr;}}
+.chart-wrap{position:relative;height:280px;width:100%;}
+.chart-wrap-sm{position:relative;height:220px;width:100%;}
+.chart-wrap-lg{position:relative;height:340px;width:100%;}
+.table-wrap{overflow-x:auto;border-radius:8px;border:1px solid var(--border);}
+table{width:100%;border-collapse:collapse;font-size:13px;}
+th{background:#f1f5f9;padding:10px 12px;text-align:left;font-weight:600;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;border-bottom:1px solid var(--border);}
+td{padding:10px 12px;border-bottom:1px solid #f1f5f9;color:var(--text);}
+tr:last-child td{border-bottom:none;}tr:hover td{background:#f8fafc;}
+.pill{font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;display:inline-block;}
+.pill-ok{background:#dcfce7;color:#16a34a;}.pill-warn{background:#fef9c3;color:#a16207;}.pill-danger{background:#fee2e2;color:#dc2626;}.pill-info{background:#dbeafe;color:#1d4ed8;}
+.upload-zone{border:2px dashed var(--border);border-radius:12px;padding:2.5rem;text-align:center;cursor:pointer;transition:all 0.2s;background:#f8fafc;}
+.upload-zone:hover,.upload-zone.drag{border-color:var(--accent);background:#eff8ff;}
+#file-input{display:none;}
+.progress-bar{width:100%;background:#e2e8f0;border-radius:10px;height:8px;overflow:hidden;}
+.progress-fill{height:8px;border-radius:10px;background:var(--accent);transition:width 0.5s;}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+@media(max-width:640px){.form-grid{grid-template-columns:1fr;}}
+.form-group{display:flex;flex-direction:column;gap:5px;}
+.form-group label{font-size:13px;font-weight:500;color:var(--text);}
+.form-group input,.form-group select,.form-group textarea{padding:9px 12px;border:1px solid var(--border);border-radius:7px;font-size:13px;font-family:var(--font);color:var(--text);background:#f8fafc;transition:border-color 0.2s;}
+.form-group input:focus,.form-group select:focus{outline:none;border-color:var(--accent);background:#fff;}
+.form-full{grid-column:1/-1;}
+.btn{padding:9px 20px;border-radius:7px;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all 0.2s;display:inline-flex;align-items:center;gap:6px;}
+.btn-primary{background:var(--primary);color:#fff;}.btn-primary:hover{background:var(--primary-light);}
+.btn-accent{background:var(--accent);color:#fff;}.btn-accent:hover{background:#0284c7;}
+.btn-success{background:var(--success);color:#fff;}
+.btn-outline{background:#fff;color:var(--primary);border:1px solid var(--border);}.btn-outline:hover{background:var(--bg);}
+.btn-group{display:flex;gap:8px;flex-wrap:wrap;margin-top:1rem;}
+.alert{padding:10px 14px;border-radius:8px;font-size:13px;margin-bottom:1rem;display:flex;align-items:center;gap:8px;}
+.alert-info{background:#dbeafe;color:#1d4ed8;border-left:4px solid var(--accent);}
+.alert-ok{background:#dcfce7;color:#166534;border-left:4px solid var(--success);}
+.report-header{background:linear-gradient(135deg,#1a4a6e,#2563a8);color:#fff;padding:1.5rem;border-radius:12px;margin-bottom:1.5rem;}
+.report-header h2{font-size:22px;margin-bottom:4px;}
+.report-meta{display:flex;gap:2rem;margin-top:1rem;flex-wrap:wrap;}
+.report-meta span{font-size:12px;opacity:0.85;}
+.finding{padding:10px 14px;border-radius:8px;border-left:4px solid;margin-bottom:8px;font-size:13px;}
+.finding-critical{background:#fee2e2;border-color:var(--danger);}
+.finding-moderate{background:#fef9c3;border-color:var(--warning);}
+.finding-low{background:#f0fdf4;border-color:var(--success);}
+.kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:1.5rem;}
+.kpi-box{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:0.9rem 1rem;text-align:center;}
+.kpi-val{font-size:20px;font-weight:700;color:var(--primary);}
+.kpi-lbl{font-size:11px;color:var(--muted);margin-top:2px;}
+.sec-heading{font-size:15px;font-weight:700;color:var(--primary);margin:1.5rem 0 0.75rem;display:flex;align-items:center;gap:8px;border-left:4px solid var(--accent);padding-left:10px;}
+footer{text-align:center;padding:1.5rem;font-size:12px;color:var(--muted);border-top:1px solid var(--border);margin-top:2rem;}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div style="display:flex;align-items:center;gap:12px;">
+    <div class="header-logo">💊</div>
+    <div>
+      <div style="font-size:18px;font-weight:600;">PharmAudit</div>
+      <div style="font-size:11px;opacity:0.7;">Pharmacy Billing &amp; Security Audit System</div>
+    </div>
+  </div>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <span style="font-size:12px;opacity:0.8;" id="current-date">06 Apr 2026</span>
+    <span class="badge-live">LIVE AUDIT</span>
+  </div>
+</div>
+
+<div class="container">
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab(&#39;input&#39;,this)">📥 Data Input</button>
+    <button class="tab" onclick="switchTab(&#39;billing&#39;,this)">💰 Billing Audit</button>
+    <button class="tab" onclick="switchTab(&#39;security&#39;,this)">🔒 Security Audit</button>
+    <button class="tab" onclick="switchTab(&#39;stats&#39;,this)">📊 Statistical Analysis</button>
+    <button class="tab" onclick="switchTab(&#39;report&#39;,this)">📋 Audit Report</button>
+  </div>
+
+  <!-- DATA INPUT TAB -->
+  <div id="tab-input" class="section active">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">
+      <div class="card">
+        <div class="card-title">📂 Upload Dataset (Excel / CSV)</div>
+        <div class="upload-zone" id="drop-zone" onclick="document.getElementById(&#39;file-input&#39;).click()">
+          <div style="font-size:36px;margin-bottom:12px;">📁</div>
+          <h3 style="font-size:15px;margin-bottom:6px;color:var(--primary);">Drag &amp; Drop or Click to Upload</h3>
+          <p style="font-size:13px;color:var(--muted);">Supports .xlsx, .xls, .csv — Max 10MB</p>
+        </div>
+        <input type="file" id="file-input" accept=".xlsx,.xls,.csv" onchange="handleFileUpload(event)">
+        <div id="upload-status" style="margin-top: 12px; display: block;">
+          <div class="alert alert-ok" id="upload-msg">✅ Loaded 100 records from "pharmacy_audit_dataset.xlsx"</div>
+          <div class="progress-bar"><div class="progress-fill" id="upload-progress" style="width: 100%;"></div></div>
+        </div>
+        <div style="margin-top:1rem;">
+          <p style="font-size:12px;color:var(--muted);margin-bottom:8px;">Expected columns:</p>
+          <div style="display:flex;flex-wrap:wrap;gap:5px;">
+            <span class="pill pill-info">bill_id</span><span class="pill pill-info">patient_id</span>
+            <span class="pill pill-info">medicine_name</span><span class="pill pill-info">quantity</span>
+            <span class="pill pill-info">unit_price</span><span class="pill pill-info">total_amount</span>
+            <span class="pill pill-info">discount_%</span><span class="pill pill-info">billed_by</span>
+            <span class="pill pill-info">date</span><span class="pill pill-info">access_role</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">✏️ Manual Entry</div>
+        <div class="form-grid">
+          <div class="form-group"><label>Bill ID</label><input type="text" id="f-bill_id" placeholder="BL001"></div>
+          <div class="form-group"><label>Patient ID</label><input type="text" id="f-patient_id" placeholder="PT001"></div>
+          <div class="form-group"><label>Medicine</label><input type="text" id="f-medicine" placeholder="Paracetamol"></div>
+          <div class="form-group"><label>Qty</label><input type="number" id="f-qty" placeholder="10"></div>
+          <div class="form-group"><label>Unit Price (₹)</label><input type="number" id="f-price" placeholder="12.50"></div>
+          <div class="form-group"><label>Total Amt (₹)</label><input type="number" id="f-total" placeholder="125.00"></div>
+          <div class="form-group"><label>Discount %</label><input type="number" id="f-discount" placeholder="5"></div>
+          <div class="form-group"><label>Billed By</label><input type="text" id="f-billed_by" placeholder="Staff01"></div>
+          <div class="form-group"><label>Date</label><input type="date" id="f-date"></div>
+          <div class="form-group"><label>Access Role</label>
+            <select id="f-role"><option value="">Select...</option><option value="pharmacist">Pharmacist</option><option value="cashier">Cashier</option><option value="manager">Manager</option><option value="admin">Admin</option><option value="unknown">Unknown</option></select>
+          </div>
+          <div class="form-group"><label>Prescription?</label>
+            <select id="f-prescription"><option value="yes">Yes</option><option value="no">No</option></select>
+          </div>
+          <div class="form-group"><label>Batch Verified?</label>
+            <select id="f-batch"><option value="yes">Yes</option><option value="no">No</option></select>
+          </div>
+        </div>
+        <div class="btn-group"><button class="btn btn-primary" onclick="saveManualEntry()">💾 Save Entry</button></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🏥 Audit Session Info</div>
+      <div class="form-grid">
+        <div class="form-group"><label>Pharmacy Name</label><input type="text" id="pharmacy-name" placeholder="City Pharmacy, Chennai"></div>
+        <div class="form-group"><label>Audit Period</label>
+          <select id="audit-period"><option>Monthly</option><option>Quarterly</option><option>Annually</option><option>Custom</option></select>
+        </div>
+        <div class="form-group"><label>Auditor Name</label><input type="text" id="auditor-name" placeholder="Dr. A. Kumar"></div>
+        <div class="form-group"><label>Audit Date</label><input type="date" id="audit-date"></div>
+        <div class="form-group form-full"><label>Remarks / Notes</label>
+          <textarea id="audit-remarks" rows="2" placeholder="Add initial observations or scope notes..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-group">
+      <button class="btn btn-outline" onclick="loadSampleData()">🎲 Load Sample Dataset (Demo)</button>
+      <button class="btn btn-primary" onclick="runAudit()">▶ Run Full Audit Analysis</button>
+    </div>
+
+    <div id="data-preview" style="margin-top: 1.5rem; display: block;">
+      <div class="card">
+        <div class="card-title">👁️ Dataset Preview <span id="preview-count" style="font-size:12px;font-weight:400;color:var(--muted);">(showing 10 of 100 records)</span></div>
+        <div class="table-wrap" id="preview-table"><table><thead><tr><th>bill id</th><th>patient id</th><th>medicine name</th><th>quantity</th><th>unit price</th><th>total amount</th><th>discount pct</th><th>billed by</th><th>date</th><th>access role</th></tr></thead><tbody><tr><td>BL001</td><td>PT041</td><td>Paracetamol</td><td>8</td><td>77.69</td><td>621.52</td><td>0</td><td>Staff03</td><td>2024-04-30</td><td>pharmacist</td></tr><tr><td>BL002</td><td>PT019</td><td>Paracetamol</td><td>8</td><td>77.21</td><td>525.03</td><td>15</td><td>Staff02</td><td>2024-04-05</td><td>unknown</td></tr><tr><td>BL003</td><td>PT006</td><td>Paracetamol</td><td>8</td><td>141.32</td><td>1526.25</td><td>10</td><td>Staff02</td><td>2024-01-06</td><td>admin</td></tr><tr><td>BL004</td><td>PT060</td><td>Amoxicillin</td><td>4</td><td>150.5</td><td>602</td><td>0</td><td>Manager01</td><td>2024-03-15</td><td>cashier</td></tr><tr><td>BL005</td><td>PT020</td><td>Prednisolone</td><td>4</td><td>125.31</td><td>501.24</td><td>0</td><td>Staff05</td><td>2024-01-25</td><td>pharmacist</td></tr><tr><td>BL006</td><td>PT035</td><td>Insulin Glargine</td><td>10</td><td>130.44</td><td>1304.4</td><td>0</td><td>Staff02</td><td>2024-04-24</td><td>cashier</td></tr><tr><td>BL007</td><td>PT078</td><td>Metformin</td><td>8</td><td>140.94</td><td>479.19</td><td>15</td><td>Staff02</td><td>2024-01-31</td><td>pharmacist</td></tr><tr><td>BL008</td><td>PT061</td><td>Ibuprofen</td><td>20</td><td>155.85</td><td>2026.05</td><td>35</td><td>Staff02</td><td>2024-04-07</td><td>pharmacist</td></tr><tr><td>BL009</td><td>PT042</td><td>Paracetamol</td><td>3</td><td>196.21</td><td>588.63</td><td>0</td><td>Staff01</td><td>2024-01-12</td><td>pharmacist</td></tr><tr><td>BL010</td><td>PT015</td><td>Azithromycin</td><td>13</td><td>70.74</td><td>827.66</td><td>10</td><td>Staff01</td><td>2024-04-24</td><td>pharmacist</td></tr></tbody></table></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BILLING TAB -->
+  <div id="tab-billing" class="section">
+    <div id="billing-content"><div class="stat-grid"><div class="stat-card"><div class="stat-label">Total Records</div><div class="stat-value">100</div></div><div class="stat-card"><div class="stat-label">Total Revenue</div><div class="stat-value" style="font-size:20px;">₹99,512</div></div><div class="stat-card stat-danger"><div class="stat-label">Flagged Records</div><div class="stat-value">21</div><div class="stat-sub">21.0% of total</div></div><div class="stat-card stat-warn"><div class="stat-label">Billing Compliance</div><div class="stat-value">79%</div></div><div class="stat-card stat-warn"><div class="stat-label">Calc Errors</div><div class="stat-value">10</div></div><div class="stat-card stat-warn"><div class="stat-label">High Discounts &gt;30%</div><div class="stat-value">14</div></div><div class="stat-card stat-danger"><div class="stat-label">Overbilling Cases</div><div class="stat-value">3</div></div><div class="stat-card stat-danger"><div class="stat-label">Duplicate Bills</div><div class="stat-value">0</div></div></div><div class="card"><div class="card-title">❌ Calculation Mismatch (10)</div><div class="table-wrap"><table><thead><tr><th>Bill ID</th><th>Medicine</th><th>Qty</th><th>Unit Price</th><th>Disc%</th><th>Expected</th><th>Billed</th><th>Diff</th><th>Billed By</th></tr></thead><tbody><tr><td>BL003</td><td>Paracetamol</td><td>8</td><td>₹141.32</td><td>10%</td><td>₹1017.5</td><td>₹1526.25</td><td><span class="pill pill-danger">+₹508.75</span></td><td>Staff02</td></tr><tr><td>BL007</td><td>Metformin</td><td>8</td><td>₹140.94</td><td>15%</td><td>₹958.39</td><td>₹479.19</td><td><span class="pill pill-warn">₹-479.2</span></td><td>Staff02</td></tr><tr><td>BL024</td><td>Insulin Glargine</td><td>9</td><td>₹8.22</td><td>35%</td><td>₹48.09</td><td>₹24.05</td><td><span class="pill pill-warn">₹-24.04</span></td><td>Staff02</td></tr><tr><td>BL029</td><td>Amoxicillin</td><td>6</td><td>₹197.23</td><td>0%</td><td>₹1183.38</td><td>₹591.69</td><td><span class="pill pill-warn">₹-591.69</span></td><td>Staff01</td></tr><tr><td>BL040</td><td>Amlodipine</td><td>2</td><td>₹23.79</td><td>5%</td><td>₹45.2</td><td>₹22.6</td><td><span class="pill pill-warn">₹-22.6</span></td><td>Staff02</td></tr><tr><td>BL062</td><td>Azithromycin</td><td>10</td><td>₹186.32</td><td>0%</td><td>₹1863.2</td><td>₹931.6</td><td><span class="pill pill-warn">₹-931.6</span></td><td>Staff01</td></tr><tr><td>BL077</td><td>Omeprazole</td><td>18</td><td>₹198.86</td><td>0%</td><td>₹3579.48</td><td>₹1789.74</td><td><span class="pill pill-warn">₹-1789.74</span></td><td>Staff05</td></tr><tr><td>BL083</td><td>Amoxicillin</td><td>18</td><td>₹170.07</td><td>35%</td><td>₹1989.82</td><td>₹2984.73</td><td><span class="pill pill-danger">+₹994.91</span></td><td>Manager01</td></tr><tr><td>BL095</td><td>Pantoprazole</td><td>10</td><td>₹82.15</td><td>15%</td><td>₹698.27</td><td>₹1047.4</td><td><span class="pill pill-danger">+₹349.13</span></td><td>Staff01</td></tr><tr><td>BL097</td><td>Aspirin</td><td>17</td><td>₹151.18</td><td>35%</td><td>₹1670.54</td><td>₹1252.9</td><td><span class="pill pill-warn">₹-417.64</span></td><td>Staff04</td></tr></tbody></table></div></div><div class="card"><div class="card-title">⚠️ High Discount &gt;30% (14)</div><div class="table-wrap"><table><thead><tr><th>Bill ID</th><th>Medicine</th><th>Discount %</th><th>Total Amt</th><th>Billed By</th><th>Date</th></tr></thead><tbody><tr><td>BL008</td><td>Ibuprofen</td><td><span class="pill pill-danger">35%</span></td><td>₹2026.05</td><td>Staff02</td><td>2024-04-07</td></tr><tr><td>BL011</td><td>Paracetamol</td><td><span class="pill pill-danger">35%</span></td><td>₹126.83</td><td>Staff02</td><td>2024-04-03</td></tr><tr><td>BL014</td><td>Amoxicillin</td><td><span class="pill pill-danger">35%</span></td><td>₹1822.08</td><td>Staff01</td><td>2024-02-18</td></tr><tr><td>BL020</td><td>Omeprazole</td><td><span class="pill pill-danger">35%</span></td><td>₹694.07</td><td>Staff04</td><td>2024-02-09</td></tr><tr><td>BL024</td><td>Insulin Glargine</td><td><span class="pill pill-danger">35%</span></td><td>₹24.05</td><td>Staff02</td><td>2024-04-06</td></tr><tr><td>BL026</td><td>Atorvastatin</td><td><span class="pill pill-danger">35%</span></td><td>₹394.1</td><td>Staff02</td><td>2024-02-27</td></tr><tr><td>BL034</td><td>Prednisolone</td><td><span class="pill pill-danger">35%</span></td><td>₹262.55</td><td>Staff01</td><td>2024-04-05</td></tr><tr><td>BL068</td><td>Omeprazole</td><td><span class="pill pill-danger">35%</span></td><td>₹841.2</td><td>Staff04</td><td>2024-04-20</td></tr><tr><td>BL073</td><td>Azithromycin</td><td><span class="pill pill-danger">35%</span></td><td>₹100.71</td><td>Staff01</td><td>2024-01-13</td></tr><tr><td>BL083</td><td>Amoxicillin</td><td><span class="pill pill-danger">35%</span></td><td>₹2984.73</td><td>Manager01</td><td>2024-01-08</td></tr><tr><td>BL084</td><td>Amlodipine</td><td><span class="pill pill-danger">35%</span></td><td>₹737.67</td><td>Manager01</td><td>2024-02-25</td></tr><tr><td>BL097</td><td>Aspirin</td><td><span class="pill pill-danger">35%</span></td><td>₹1252.9</td><td>Staff04</td><td>2024-04-18</td></tr><tr><td>BL098</td><td>Amlodipine</td><td><span class="pill pill-danger">35%</span></td><td>₹772.2</td><td>Staff01</td><td>2024-03-29</td></tr><tr><td>BL099</td><td>Atorvastatin</td><td><span class="pill pill-danger">35%</span></td><td>₹286.03</td><td>Staff04</td><td>2024-03-17</td></tr></tbody></table></div></div><div class="card"><div class="card-title">👥 Staff Billing Summary</div><div class="table-wrap"><table><thead><tr><th>Staff</th><th>Bills</th><th>% of Total</th><th>Status</th></tr></thead><tbody><tr><td>Staff02</td><td>23</td><td>23.0%</td><td><span class="pill pill-ok">Normal</span></td></tr><tr><td>Staff03</td><td>20</td><td>20.0%</td><td><span class="pill pill-ok">Normal</span></td></tr><tr><td>Staff01</td><td>17</td><td>17.0%</td><td><span class="pill pill-ok">Normal</span></td></tr><tr><td>Staff04</td><td>15</td><td>15.0%</td><td><span class="pill pill-ok">Normal</span></td></tr><tr><td>Manager01</td><td>14</td><td>14.0%</td><td><span class="pill pill-ok">Normal</span></td></tr><tr><td>Staff05</td><td>11</td><td>11.0%</td><td><span class="pill pill-ok">Normal</span></td></tr></tbody></table></div></div></div>
+  </div>
+
+  <!-- SECURITY TAB -->
+  <div id="tab-security" class="section">
+    <div id="security-content"><div class="stat-grid"><div class="stat-card stat-danger"><div class="stat-label">Unknown Role Entries</div><div class="stat-value">14</div></div><div class="stat-card stat-danger"><div class="stat-label">No Prescription</div><div class="stat-value">13</div><div class="stat-sub">Controlled drugs</div></div><div class="stat-card stat-warn"><div class="stat-label">Batch Unverified</div><div class="stat-value">16</div></div><div class="stat-card stat-warn"><div class="stat-label">Unauth &gt;₹5k</div><div class="stat-value">0</div></div><div class="stat-card stat-warn"><div class="stat-label">Multi-Role Staff</div><div class="stat-value">6</div></div><div class="stat-card stat-warn"><div class="stat-label">Security Compliance</div><div class="stat-value">63%</div></div></div><div class="card"><div class="card-title">🔑 Access Role Distribution</div><div class="table-wrap"><table><thead><tr><th>Role</th><th>Count</th><th>% Share</th><th>Risk</th></tr></thead><tbody><tr><td>pharmacist</td><td>34</td><td>34.0%</td><td><span class="pill pill-ok">Low</span></td></tr><tr><td>unknown</td><td>14</td><td>14.0%</td><td><span class="pill pill-danger">Critical</span></td></tr><tr><td>admin</td><td>16</td><td>16.0%</td><td><span class="pill pill-warn">High</span></td></tr><tr><td>cashier</td><td>23</td><td>23.0%</td><td><span class="pill pill-ok">Low</span></td></tr><tr><td>manager</td><td>13</td><td>13.0%</td><td><span class="pill pill-info">Medium</span></td></tr></tbody></table></div></div><div class="card"><div class="card-title">🚫 Missing Prescription — Controlled Drugs (13)</div><div class="table-wrap"><table><thead><tr><th>Bill ID</th><th>Medicine</th><th>Patient</th><th>Billed By</th><th>Date</th></tr></thead><tbody><tr><td>BL007</td><td>Metformin</td><td>PT078</td><td>Staff02</td><td>2024-01-31</td></tr><tr><td>BL015</td><td>Lisinopril</td><td>PT080</td><td>Staff05</td><td>2024-01-01</td></tr><tr><td>BL018</td><td>Amoxicillin</td><td>PT006</td><td>Staff02</td><td>2024-01-23</td></tr><tr><td>BL029</td><td>Amoxicillin</td><td>PT046</td><td>Staff01</td><td>2024-03-07</td></tr><tr><td>BL034</td><td>Prednisolone</td><td>PT034</td><td>Staff01</td><td>2024-04-05</td></tr><tr><td>BL041</td><td>Insulin Glargine</td><td>PT057</td><td>Staff01</td><td>2024-01-11</td></tr><tr><td>BL044</td><td>Azithromycin</td><td>PT007</td><td>Staff02</td><td>2024-01-13</td></tr><tr><td>BL057</td><td>Insulin Glargine</td><td>PT014</td><td>Staff04</td><td>2024-02-18</td></tr><tr><td>BL067</td><td>Amoxicillin</td><td>PT024</td><td>Staff05</td><td>2024-02-23</td></tr><tr><td>BL071</td><td>Prednisolone</td><td>PT018</td><td>Staff03</td><td>2024-01-10</td></tr><tr><td>BL073</td><td>Azithromycin</td><td>PT069</td><td>Staff01</td><td>2024-01-13</td></tr><tr><td>BL082</td><td>Amoxicillin</td><td>PT032</td><td>Staff05</td><td>2024-01-03</td></tr><tr><td>BL086</td><td>Metformin</td><td>PT038</td><td>Staff04</td><td>2024-02-06</td></tr></tbody></table></div></div><div class="card"><div class="card-title">⚠️ Multi-Role Staff (6)</div><div class="table-wrap"><table><thead><tr><th>Staff</th><th>Roles</th><th>Action</th></tr></thead><tbody><tr><td>Staff03</td><td>pharmacist, cashier, manager, admin</td><td><span class="pill pill-warn">Investigate</span></td></tr><tr><td>Staff02</td><td>unknown, admin, cashier, pharmacist, manager</td><td><span class="pill pill-warn">Investigate</span></td></tr><tr><td>Manager01</td><td>cashier, unknown, admin, pharmacist, manager</td><td><span class="pill pill-warn">Investigate</span></td></tr><tr><td>Staff05</td><td>pharmacist, unknown, admin, manager, cashier</td><td><span class="pill pill-warn">Investigate</span></td></tr><tr><td>Staff01</td><td>pharmacist, manager, admin, unknown, cashier</td><td><span class="pill pill-warn">Investigate</span></td></tr><tr><td>Staff04</td><td>manager, cashier, unknown, pharmacist</td><td><span class="pill pill-warn">Investigate</span></td></tr></tbody></table></div></div></div>
+  </div>
+
+  <!-- STATISTICAL ANALYSIS TAB -->
+  <div id="tab-stats" class="section">
+    <div id="stats-content"><div class="sec-heading">📐 Descriptive Statistics</div><div class="kpi-row"><div class="kpi-box"><div class="kpi-val">₹995.12</div><div class="kpi-lbl">Mean Transaction</div></div><div class="kpi-box"><div class="kpi-val">₹813.72</div><div class="kpi-lbl">Median Transaction</div></div><div class="kpi-box"><div class="kpi-val">₹791.44</div><div class="kpi-lbl">Std Deviation</div></div><div class="kpi-box"><div class="kpi-val">₹22.6</div><div class="kpi-lbl">Min Amount</div></div><div class="kpi-box"><div class="kpi-val">₹3,507.4</div><div class="kpi-lbl">Max Amount</div></div><div class="kpi-box"><div class="kpi-val">₹479.19</div><div class="kpi-lbl">25th Percentile</div></div><div class="kpi-box"><div class="kpi-val">₹1,373.75</div><div class="kpi-lbl">75th Percentile</div></div><div class="kpi-box"><div class="kpi-val">₹2,852</div><div class="kpi-lbl">95th Percentile</div></div><div class="kpi-box"><div class="kpi-val">21.0%</div><div class="kpi-lbl">Anomaly Rate</div></div><div class="kpi-box"><div class="kpi-val">₹5,558.38</div><div class="kpi-lbl">Revenue at Risk</div></div></div><div class="card"><div class="card-title">📋 Full Descriptive Statistics Table</div><div class="table-wrap"><table><thead><tr><th>Metric</th><th>Total Amount (₹)</th><th>Unit Price (₹)</th><th>Discount %</th><th>Quantity</th></tr></thead><tbody><tr><td><strong>Mean</strong></td><td>₹995.12</td><td>₹109.77</td><td>11.35%</td><td>10.91</td></tr><tr><td><strong>Median</strong></td><td>₹813.72</td><td>₹107.29</td><td>10%</td><td>10</td></tr><tr><td><strong>Std Dev</strong></td><td>₹791.44</td><td>₹54.81</td><td>12.1%</td><td>5.69</td></tr><tr><td><strong>Min</strong></td><td>₹22.6</td><td>₹6.28</td><td>0%</td><td>1</td></tr><tr><td><strong>Max</strong></td><td>₹3,507.4</td><td>₹198.86</td><td>35%</td><td>20</td></tr><tr><td><strong>P25</strong></td><td>₹479.19</td><td>—</td><td>—</td><td>—</td></tr><tr><td><strong>P75</strong></td><td>₹1,373.75</td><td>—</td><td>—</td><td>—</td></tr><tr><td><strong>P95</strong></td><td>₹2,852</td><td>—</td><td>—</td><td>—</td></tr></tbody></table></div></div><div class="sec-heading">📈 Revenue &amp; Error Trend Analysis</div><div class="chart-grid"><div class="card"><div class="card-title">Monthly Revenue Trend</div><div class="chart-wrap"><canvas id="chart-revenue" height="315" style="display: block; box-sizing: border-box; height: 280px; width: 556px;" width="625"></canvas></div></div><div class="card"><div class="card-title">Monthly Error Rate (%)</div><div class="chart-wrap"><canvas id="chart-errorrate" height="315" style="display: block; box-sizing: border-box; height: 280px; width: 556px;" width="625"></canvas></div></div></div><div class="sec-heading">💊 Medicine Analysis</div><div class="chart-grid"><div class="card"><div class="card-title">Top 10 Medicines by Frequency</div><div class="chart-wrap"><canvas id="chart-topmed" height="315" style="display: block; box-sizing: border-box; height: 280px; width: 556px;" width="625"></canvas></div></div><div class="card"><div class="card-title">Top 8 Medicines by Revenue (₹)</div><div class="chart-wrap"><canvas id="chart-medrev" height="315" style="display: block; box-sizing: border-box; height: 280px; width: 556px;" width="625"></canvas></div></div></div><div class="sec-heading">📊 Distribution Analysis</div><div class="chart-grid"><div class="card"><div class="card-title">Discount % Distribution</div><div class="chart-wrap"><canvas id="chart-disc" height="315" style="display: block; box-sizing: border-box; height: 280px; width: 556px;" width="625"></canvas></div></div><div class="card"><div class="card-title">Transaction Amount Distribution (₹)</div><div class="chart-wrap"><canvas id="chart-amt" height="315" style="display: block; box-sizing: border-box; height: 280px; width: 556px;" width="625"></canvas></div></div></div><div class="sec-heading">🔒 Compliance &amp; Risk Breakdown</div><div class="chart-grid-3"><div class="card"><div class="card-title">Billing Issues Breakdown</div><div class="chart-wrap-sm"><canvas id="chart-billpie" height="247" style="display: block; box-sizing: border-box; height: 220px; width: 346px;" width="389"></canvas></div></div><div class="card"><div class="card-title">Security Flags Breakdown</div><div class="chart-wrap-sm"><canvas id="chart-secpie" height="247" style="display: block; box-sizing: border-box; height: 220px; width: 346px;" width="389"></canvas></div></div><div class="card"><div class="card-title">Access Role Distribution</div><div class="chart-wrap-sm"><canvas id="chart-rolepie" height="247" style="display: block; box-sizing: border-box; height: 220px; width: 346px;" width="389"></canvas></div></div></div><div class="sec-heading">👥 Staff Performance Analysis</div><div class="chart-grid"><div class="card"><div class="card-title">Staff — Bill Count vs Revenue (₹)</div><div class="chart-wrap"><canvas id="chart-staffbar" height="315" style="display: block; box-sizing: border-box; height: 280px; width: 556px;" width="625"></canvas></div></div><div class="card"><div class="card-title">Staff — Error Rate (%)</div><div class="chart-wrap"><canvas id="chart-stafferror" height="315" style="display: block; box-sizing: border-box; height: 280px; width: 556px;" width="625"></canvas></div></div></div><div class="card"><div class="card-title">📋 Staff Detailed Performance</div><div class="table-wrap"><table><thead><tr><th>Staff</th><th>Total Bills</th><th>Total Revenue</th><th>Errors</th><th>Error Rate</th><th>Discount Bills</th><th>Rating</th></tr></thead><tbody id="staff-table-body"><tr><td>Staff03</td><td>20</td><td>₹24,053</td><td>0</td><td>0.0%</td><td>14</td><td><span class="pill pill-ok">Good</span></td></tr><tr><td>Staff02</td><td>23</td><td>₹21,706</td><td>4</td><td>17.4%</td><td>16</td><td><span class="pill pill-danger">High Risk</span></td></tr><tr><td>Manager01</td><td>14</td><td>₹12,920</td><td>1</td><td>7.1%</td><td>5</td><td><span class="pill pill-warn">Review</span></td></tr><tr><td>Staff05</td><td>11</td><td>₹6,654</td><td>1</td><td>9.1%</td><td>7</td><td><span class="pill pill-warn">Review</span></td></tr><tr><td>Staff01</td><td>17</td><td>₹19,243</td><td>3</td><td>17.6%</td><td>9</td><td><span class="pill pill-danger">High Risk</span></td></tr><tr><td>Staff04</td><td>15</td><td>₹14,937</td><td>1</td><td>6.7%</td><td>9</td><td><span class="pill pill-warn">Review</span></td></tr></tbody></table></div></div><div class="sec-heading">🔍 Discount vs Amount Correlation</div><div class="card"><div class="card-title">Scatter Plot — Discount % vs Total Amount (first 60 records)</div><div class="chart-wrap-lg"><canvas id="chart-scatter" height="382" style="display: block; box-sizing: border-box; height: 340px; width: 1186px;" width="1334"></canvas></div><p style="font-size:12px;color:var(--muted);margin-top:8px;">Each point = one transaction. Clusters at high discount + high amount indicate potential fraud.</p></div><div class="sec-heading">📅 Monthly Volume &amp; Revenue Combo</div><div class="card"><div class="card-title">Transactions Count + Revenue by Month</div><div class="chart-wrap-lg"><canvas id="chart-monthly-combo" height="382" style="display: block; box-sizing: border-box; height: 340px; width: 1186px;" width="1334"></canvas></div></div></div>
+  </div>
+
+  <!-- REPORT TAB -->
+  <div id="tab-report" class="section">
+    <div id="report-content"><div class="report-header"><h2>📋 Pharmacy Audit Report</h2><p>Kovai Medicals &nbsp;|&nbsp; Auditor: Kavipriyadharshini V</p><div class="report-meta"><span>📅 2026-03-21</span><span>📊 Monthly</span><span>🗃️ 100 records</span><span>🕒 6/4/2026, 11:56:43 am</span></div></div><div class="stat-grid"><div class="stat-card" style="text-align:center;"><div class="stat-label">Overall Audit Score</div><div class="stat-value" style="color:#d97706;font-size:36px;">71%</div><div class="stat-sub"><span class="pill pill-warn">NEEDS REVIEW</span></div></div><div class="stat-card stat-warn"><div class="stat-label">Billing Compliance</div><div class="stat-value">79%</div><div class="stat-sub">21 issues</div></div><div class="stat-card stat-warn"><div class="stat-label">Security Compliance</div><div class="stat-value">63%</div><div class="stat-sub">37 issues</div></div><div class="stat-card"><div class="stat-label">Revenue Audited</div><div class="stat-value" style="font-size:18px;">₹99,512</div></div><div class="stat-card stat-danger"><div class="stat-label">Revenue at Risk</div><div class="stat-value" style="font-size:18px;">₹5,558</div></div><div class="stat-card stat-warn"><div class="stat-label">Anomaly Rate</div><div class="stat-value">21.0%</div></div></div><div class="card"><div class="card-title">🔎 Key Findings</div><div class="finding finding-critical"><strong>CRITICAL:</strong> 10 billing calculation errors detected — possible fraud or data entry mistakes.</div><div class="finding finding-critical"><strong>CRITICAL:</strong> 3 overbilling cases where charged amount exceeds computed by &gt;20%.</div><div class="finding finding-critical"><strong>CRITICAL:</strong> 14 transactions by unknown roles — unauthorized access suspected.</div><div class="finding finding-critical"><strong>CRITICAL:</strong> 13 controlled drug dispensing without prescriptions — regulatory violation.</div><div class="finding finding-moderate"><strong>MODERATE:</strong> 14 transactions with discounts &gt;30% — needs management approval verification.</div><div class="finding finding-moderate"><strong>MODERATE:</strong> 16 medicines dispensed without batch verification.</div><div class="finding finding-moderate"><strong>MODERATE:</strong> 6 staff members with multiple access roles — review permissions.</div></div><div class="card"><div class="card-title">📐 Statistical Highlights</div><div class="table-wrap"><table><thead><tr><th>Metric</th><th>Value</th><th>Interpretation</th></tr></thead><tbody><tr><td>Mean Transaction</td><td>₹995.12</td><td>Average billing amount per record</td></tr><tr><td>Std Deviation</td><td>₹791.44</td><td>Moderate spread</td></tr><tr><td>95th Percentile</td><td>₹2852.00</td><td>Top 5% of transactions exceed this</td></tr><tr><td>Mean Discount</td><td>11.3%</td><td>Within acceptable range</td></tr><tr><td>Anomaly Rate</td><td>21.0%</td><td>High — immediate review needed</td></tr><tr><td>Revenue at Risk</td><td>₹5,558</td><td>From identified overbilling cases</td></tr></tbody></table></div></div><div class="card"><div class="card-title">✅ Recommendations</div><div class="table-wrap"><table><thead><tr><th>#</th><th>Area</th><th>Action Required</th><th>Priority</th></tr></thead><tbody><tr><td>1</td><td>Billing</td><td>Implement automated total calculation validation before bill generation</td><td><span class="pill pill-danger">Critical</span></td></tr><tr><td>2</td><td>Access Control</td><td>Remove or reassign all unknown role accounts immediately</td><td><span class="pill pill-danger">Critical</span></td></tr><tr><td>3</td><td>Prescription</td><td>Enable mandatory prescription upload for controlled substances</td><td><span class="pill pill-danger">Critical</span></td></tr><tr><td>4</td><td>Discount Policy</td><td>Require manager approval for discounts exceeding 30%</td><td><span class="pill pill-warn">High</span></td></tr><tr><td>5</td><td>Batch Tracking</td><td>Enable batch number scanning at point-of-sale</td><td><span class="pill pill-info">Medium</span></td></tr><tr><td>6</td><td>Staff Monitoring</td><td>Restrict cashiers from processing transactions above ₹5,000</td><td><span class="pill pill-warn">High</span></td></tr><tr><td>7</td><td>Audit Trail</td><td>Enable timestamped logs for all billing modifications</td><td><span class="pill pill-info">Medium</span></td></tr><tr><td>8</td><td>Training</td><td>Monthly training for billing staff on compliance procedures</td><td><span class="pill pill-ok">Low</span></td></tr></tbody></table></div></div><div class="card"><div class="card-title">📝 Auditor Remarks</div><p style="font-size:13px;line-height:1.7;">Initial audit conducted to analyze pharmacy billing transactions and verify billing accuracy, discount patterns, and user access compliance.</p></div><div class="btn-group"><button class="btn btn-primary" onclick="downloadPDFReport()">📄 Download PDF Report</button><button class="btn btn-success" onclick="downloadExcelReport()">📊 Download Excel Report</button><button class="btn btn-outline" onclick="window.print()">🖨️ Print</button></div></div>
+  </div>
+</div>
+
+<footer>PharmAudit Pro v2.0 &nbsp;|&nbsp; Pharmacy Billing &amp; Security Audit Dashboard &nbsp;|&nbsp; For internal audit use only</footer>
+
+<script>
+var auditData=[],auditResults={},chartInstances={};
+
+document.getElementById('current-date').textContent=new Date().toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
+document.getElementById('audit-date').value=new Date().toISOString().split('T')[0];
+document.getElementById('f-date').value=new Date().toISOString().split('T')[0];
+
+function switchTab(name,el){
+  document.querySelectorAll('.section').forEach(function(s){s.classList.remove('active');});
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
+  document.getElementById('tab-'+name).classList.add('active');
+  el.classList.add('active');
+}
+
+function handleFileUpload(e){
+  var file=e.target.files[0];if(!file)return;
+  var reader=new FileReader();
+  reader.onload=function(ev){
+    try{
+      var data=[];
+      if(file.name.endsWith('.csv'))data=parseCSV(ev.target.result);
+      else{var wb=XLSX.read(ev.target.result,{type:'array'});data=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]],{defval:''});}
+      if(!data.length){alert('No data found.');return;}
+      auditData=normalizeData(data);
+      showUploadStatus('Loaded '+auditData.length+' records from "'+file.name+'"',100);
+      renderPreview(auditData);
+    }catch(err){alert('Error: '+err.message);}
+  };
+  if(file.name.endsWith('.csv'))reader.readAsText(file);else reader.readAsArrayBuffer(file);
+}
+
+function parseCSV(text){
+  var lines=text.trim().split('\n');
+  var hdr=lines[0].split(',').map(function(h){return h.trim().replace(/"/g,'');});
+  return lines.slice(1).map(function(l){
+    var v=l.split(',').map(function(x){return x.trim().replace(/"/g,'');});
+    var o={};hdr.forEach(function(h,i){o[h]=v[i]||'';});return o;
+  });
+}
+
+function normalizeData(rows){
+  return rows.map(function(r,i){return{
+    bill_id:r.bill_id||r['Bill ID']||'BL'+String(i+1).padStart(3,'0'),
+    patient_id:r.patient_id||r['Patient ID']||'PT'+String(i+1).padStart(3,'0'),
+    medicine_name:r.medicine_name||r['Medicine']||r['Drug']||'',
+    quantity:parseFloat(r.quantity||r['Qty']||0),
+    unit_price:parseFloat(r.unit_price||r['Unit Price']||r['Price']||0),
+    total_amount:parseFloat(r.total_amount||r['Total']||r['Amount']||0),
+    discount_pct:parseFloat(r['discount_%']||r['Discount%']||r['Discount']||0),
+    billed_by:r.billed_by||r['Billed By']||'Unknown',
+    date:r.date||r['Date']||'',
+    access_role:(r.access_role||r['Role']||'unknown').toLowerCase(),
+    prescription:(r.prescription||r['Prescription']||'yes').toLowerCase(),
+    batch_verified:(r.batch_verified||r['Batch Verified']||'yes').toLowerCase(),
+  };});
+}
+
+function showUploadStatus(msg,pct){
+  document.getElementById('upload-status').style.display='block';
+  document.getElementById('upload-msg').textContent='✅ '+msg;
+  document.getElementById('upload-progress').style.width=pct+'%';
+}
+
+var dz=document.getElementById('drop-zone');
+dz.addEventListener('dragover',function(e){e.preventDefault();dz.classList.add('drag');});
+dz.addEventListener('dragleave',function(){dz.classList.remove('drag');});
+dz.addEventListener('drop',function(e){e.preventDefault();dz.classList.remove('drag');var f=e.dataTransfer.files[0];if(f)handleFileUpload({target:{files:e.dataTransfer.files}});});
+
+function saveManualEntry(){
+  var g=function(id){return document.getElementById(id)?document.getElementById(id).value:'';};
+  var rec={
+    bill_id:g('f-bill_id')||'BL'+Date.now(),patient_id:g('f-patient_id')||'PT'+Date.now(),
+    medicine_name:g('f-medicine'),quantity:parseFloat(g('f-qty'))||0,
+    unit_price:parseFloat(g('f-price'))||0,total_amount:parseFloat(g('f-total'))||0,
+    discount_pct:parseFloat(g('f-discount'))||0,billed_by:g('f-billed_by')||'Unknown',
+    date:g('f-date')||new Date().toISOString().split('T')[0],
+    access_role:g('f-role')||'unknown',prescription:g('f-prescription')||'yes',batch_verified:g('f-batch')||'yes'
+  };
+  if(!rec.medicine_name){alert('Please enter a medicine name.');return;}
+  auditData.push(rec);
+  renderPreview(auditData);
+  showUploadStatus('Record added. Total: '+auditData.length,100);
+}
+
+function loadSampleData(){
+  var meds=['Paracetamol','Amoxicillin','Metformin','Atorvastatin','Omeprazole','Cetirizine','Pantoprazole','Azithromycin','Ibuprofen','Aspirin','Lisinopril','Losartan','Amlodipine','Insulin Glargine','Prednisolone','Ranitidine','Dolo 650','Crocin','Montair LC','Telma 40'];
+  var staff=['Staff01','Staff02','Staff03','Staff04','Staff05','Manager01'];
+  var roles=['pharmacist','cashier','pharmacist','cashier','manager','admin','unknown'];
+  var data=[];
+  for(var i=1;i<=100;i++){
+    var qty=Math.floor(Math.random()*20)+1;
+    var price=parseFloat((Math.random()*200+5).toFixed(2));
+    var disc=Math.random()<0.3?Math.floor(Math.random()*40)+5:0;
+    var correct=parseFloat((qty*price*(1-disc/100)).toFixed(2));
+    var total=correct;
+    if(Math.random()<0.08)total=parseFloat((correct*1.5).toFixed(2));
+    if(Math.random()<0.05)total=parseFloat((correct*0.4).toFixed(2));
+    var role=roles[Math.floor(Math.random()*roles.length)];
+    var prescription=Math.random()<0.15?'no':'yes';
+    var batch=Math.random()<0.1?'no':'yes';
+    var mo=Math.floor(Math.random()*12);
+    var d=new Date(2024,mo,Math.floor(Math.random()*28)+1);
+    data.push({
+      bill_id:'BL'+String(i).padStart(3,'0'),
+      patient_id:'PT'+String(Math.floor(Math.random()*60)+1).padStart(3,'0'),
+      medicine_name:meds[Math.floor(Math.random()*meds.length)],
+      quantity:qty,unit_price:price,total_amount:total,discount_pct:disc,
+      billed_by:staff[Math.floor(Math.random()*staff.length)],
+      date:d.toISOString().split('T')[0],access_role:role,prescription:prescription,batch_verified:batch
+    });
+  }
+  auditData=data;
+  renderPreview(auditData);
+  showUploadStatus('Sample dataset loaded. 100 records with realistic anomalies.',100);
+}
+
+function renderPreview(data){
+  var cols=['bill_id','patient_id','medicine_name','quantity','unit_price','total_amount','discount_pct','billed_by','date','access_role'];
+  var html='<table><thead><tr>'+cols.map(function(c){return '<th>'+c.replace(/_/g,' ')+'</th>';}).join('')+'</tr></thead><tbody>';
+  data.slice(0,10).forEach(function(r){html+='<tr>'+cols.map(function(c){return '<td>'+(r[c]===undefined?'':r[c])+'</td>';}).join('')+'</tr>';});
+  html+='</tbody></table>';
+  document.getElementById('preview-table').innerHTML=html;
+  document.getElementById('preview-count').textContent='(showing 10 of '+data.length+' records)';
+  document.getElementById('data-preview').style.display='block';
+}
+
+function runAudit(){
+  if(!auditData.length){alert('Please load a dataset first.');return;}
+  var billing=analyzeBilling(auditData);
+  var security=analyzeSecurity(auditData);
+  var stats=analyzeStats(auditData,billing,security);
+  auditResults={billing:billing,security:security,stats:stats,meta:{
+    pharmacyName:document.getElementById('pharmacy-name').value||'Unnamed Pharmacy',
+    auditorName:document.getElementById('auditor-name').value||'Auditor',
+    auditDate:document.getElementById('audit-date').value||new Date().toISOString().split('T')[0],
+    period:document.getElementById('audit-period').value,
+    remarks:document.getElementById('audit-remarks').value,
+    totalRecords:auditData.length,
+    generatedAt:new Date().toLocaleString('en-IN')
+  }};
+  renderBillingTab(billing);
+  renderSecurityTab(security);
+  renderStatsTab(stats,billing,security);
+  renderReportTab(auditResults);
+  alert('Audit complete! Click each tab to explore results.');
+}
+
+// ── ANALYSIS FUNCTIONS ──────────────────────────────────────
+function analyzeBilling(data){
+  var total=data.length;
+  var totalRevenue=data.reduce(function(s,r){return s+r.total_amount;},0);
+  var calcErrors=data.filter(function(r){var exp=parseFloat((r.quantity*r.unit_price*(1-r.discount_pct/100)).toFixed(2));return Math.abs(r.total_amount-exp)>1;});
+  var highDiscount=data.filter(function(r){return r.discount_pct>30;});
+  var billIds=data.map(function(r){return r.bill_id;});
+  var dupIds=billIds.filter(function(id,i){return billIds.indexOf(id)!==i;});
+  var duplicates=data.filter(function(r){return dupIds.indexOf(r.bill_id)!==-1;});
+  var zeroVal=data.filter(function(r){return r.total_amount<=0||r.unit_price<=0||r.quantity<=0;});
+  var overbilling=data.filter(function(r){var exp=r.quantity*r.unit_price*(1-r.discount_pct/100);return r.total_amount>exp*1.2&&exp>0;});
+  var missingMed=data.filter(function(r){return !r.medicine_name||!r.medicine_name.trim();});
+  var staffMap={};
+  data.forEach(function(r){staffMap[r.billed_by]=(staffMap[r.billed_by]||0)+1;});
+  var flaggedSet={};
+  [].concat(calcErrors,highDiscount,duplicates,zeroVal,overbilling,missingMed).forEach(function(r){flaggedSet[r.bill_id]=1;});
+  var flaggedCount=Object.keys(flaggedSet).length;
+  var score=Math.round(((total-flaggedCount)/total)*100);
+  return{total:total,totalRevenue:totalRevenue,calcErrors:calcErrors,highDiscount:highDiscount,duplicates:duplicates,zeroVal:zeroVal,overbilling:overbilling,missingMed:missingMed,staffMap:staffMap,score:score,flaggedCount:flaggedCount};
+}
+
+function analyzeSecurity(data){
+  var total=data.length;
+  var unknownRole=data.filter(function(r){return r.access_role==='unknown'||!r.access_role;});
+  var controlled=['insulin','prednisolone','amoxicillin','azithromycin','losartan','lisinopril','metformin'];
+  var noPrescription=data.filter(function(r){return r.prescription==='no'&&controlled.some(function(d){return r.medicine_name.toLowerCase().indexOf(d)!==-1;});});
+  var noBatch=data.filter(function(r){return r.batch_verified==='no';});
+  var unauthorizedHighValue=data.filter(function(r){return r.access_role==='cashier'&&r.total_amount>5000;});
+  var staffRoles={};
+  data.forEach(function(r){if(!staffRoles[r.billed_by])staffRoles[r.billed_by]={};staffRoles[r.billed_by][r.access_role]=1;});
+  var multiRole=[];
+  Object.keys(staffRoles).forEach(function(name){var roles=Object.keys(staffRoles[name]);if(roles.length>1)multiRole.push({name:name,roles:roles});});
+  var weekendEntries=data.filter(function(r){if(!r.date)return false;var d=new Date(r.date);return d.getDay()===0||d.getDay()===6;});
+  var roleMap={};
+  data.forEach(function(r){roleMap[r.access_role]=(roleMap[r.access_role]||0)+1;});
+  var flaggedSet={};
+  [].concat(unknownRole,noPrescription,noBatch,unauthorizedHighValue).forEach(function(r){flaggedSet[r.bill_id]=1;});
+  var flaggedCount=Object.keys(flaggedSet).length;
+  var score=Math.round(((total-flaggedCount)/total)*100);
+  return{total:total,unknownRole:unknownRole,noPrescription:noPrescription,noBatch:noBatch,unauthorizedHighValue:unauthorizedHighValue,multiRole:multiRole,weekendEntries:weekendEntries,roleMap:roleMap,score:score,flaggedCount:flaggedCount};
+}
+
+function analyzeStats(data,billing,security){
+  var amounts=data.map(function(r){return r.total_amount;}).filter(function(v){return v>0;}).sort(function(a,b){return a-b;});
+  var prices=data.map(function(r){return r.unit_price;}).filter(function(v){return v>0;});
+  var discounts=data.map(function(r){return r.discount_pct;});
+  var qtys=data.map(function(r){return r.quantity;}).filter(function(v){return v>0;});
+
+  function mean(arr){return arr.reduce(function(s,v){return s+v;},0)/arr.length;}
+  function median(arr){var s=arr.slice().sort(function(a,b){return a-b;});var m=Math.floor(s.length/2);return s.length%2?s[m]:(s[m-1]+s[m])/2;}
+  function std(arr){var m=mean(arr);return Math.sqrt(arr.reduce(function(s,v){return s+(v-m)*(v-m);},0)/arr.length);}
+  function pct(arr,p){var s=arr.slice().sort(function(a,b){return a-b;});return s[Math.floor(s.length*p/100)];}
+
+  // Monthly
+  var monthlyMap={};
+  data.forEach(function(r){
+    if(!r.date)return;
+    var mo=r.date.slice(0,7);
+    if(!monthlyMap[mo])monthlyMap[mo]={revenue:0,count:0,errors:0};
+    monthlyMap[mo].revenue+=r.total_amount;monthlyMap[mo].count++;
+  });
+  billing.calcErrors.forEach(function(r){var mo=r.date.slice(0,7);if(monthlyMap[mo])monthlyMap[mo].errors++;});
+  var months=Object.keys(monthlyMap).sort();
+
+  // Top medicines
+  var medMap={},medRev={};
+  data.forEach(function(r){medMap[r.medicine_name]=(medMap[r.medicine_name]||0)+1;medRev[r.medicine_name]=(medRev[r.medicine_name]||0)+r.total_amount;});
+  var topMeds=Object.keys(medMap).map(function(k){return[k,medMap[k]];}).sort(function(a,b){return b[1]-a[1];}).slice(0,10);
+  var topMedRev=Object.keys(medRev).map(function(k){return[k,medRev[k]];}).sort(function(a,b){return b[1]-a[1];}).slice(0,8);
+
+  // Discount distribution
+  var discBuckets={'0':0,'1-10':0,'11-20':0,'21-30':0,'31-40':0,'>40':0};
+  data.forEach(function(r){var d=r.discount_pct;if(d===0)discBuckets['0']++;else if(d<=10)discBuckets['1-10']++;else if(d<=20)discBuckets['11-20']++;else if(d<=30)discBuckets['21-30']++;else if(d<=40)discBuckets['31-40']++;else discBuckets['>40']++;});
+
+  // Amount distribution
+  var amtBuckets={'<100':0,'100-500':0,'500-1k':0,'1k-5k':0,'5k-10k':0,'>10k':0};
+  amounts.forEach(function(v){if(v<100)amtBuckets['<100']++;else if(v<500)amtBuckets['100-500']++;else if(v<1000)amtBuckets['500-1k']++;else if(v<5000)amtBuckets['1k-5k']++;else if(v<10000)amtBuckets['5k-10k']++;else amtBuckets['>10k']++;});
+
+  // Staff stats
+  var staffStats={};
+  data.forEach(function(r){if(!staffStats[r.billed_by])staffStats[r.billed_by]={count:0,revenue:0,errors:0,discounts:0};staffStats[r.billed_by].count++;staffStats[r.billed_by].revenue+=r.total_amount;if(r.discount_pct>0)staffStats[r.billed_by].discounts++;});
+  billing.calcErrors.forEach(function(r){if(staffStats[r.billed_by])staffStats[r.billed_by].errors++;});
+
+  // Scatter
+  var scatter=data.slice(0,60).map(function(r){return{x:r.discount_pct,y:Math.round(r.total_amount)};});
+
+  // Error rate by month
+  var errorRateByMonth=months.map(function(m){return{month:m,errorRate:monthlyMap[m].count>0?parseFloat(((monthlyMap[m].errors/monthlyMap[m].count)*100).toFixed(1)):0};});
+
+  return{
+    descStats:{
+      amount:{mean:mean(amounts),median:median(amounts),std:std(amounts),min:amounts[0],max:amounts[amounts.length-1],p25:pct(amounts,25),p75:pct(amounts,75),p95:pct(amounts,95)},
+      price:{mean:mean(prices),median:median(prices),std:std(prices),min:Math.min.apply(null,prices),max:Math.max.apply(null,prices)},
+      discount:{mean:mean(discounts),median:median(discounts),std:std(discounts),max:Math.max.apply(null,discounts)},
+      qty:{mean:mean(qtys),median:median(qtys),std:std(qtys),max:Math.max.apply(null,qtys)},
+    },
+    months:months,monthlyMap:monthlyMap,topMeds:topMeds,topMedRev:topMedRev,
+    discBuckets:discBuckets,amtBuckets:amtBuckets,staffStats:staffStats,scatter:scatter,errorRateByMonth:errorRateByMonth,
+    anomalyRate:((billing.flaggedCount/data.length)*100).toFixed(1),
+    avgTransactionValue:mean(amounts).toFixed(2),
+    revenueAtRisk:billing.overbilling.reduce(function(s,r){return s+r.total_amount;},0).toFixed(2),
+  };
+}
+
+// ── RENDER FUNCTIONS ────────────────────────────────────────
+function renderBillingTab(b){
+  var sc=b.score>=80?'stat-ok':b.score>=60?'stat-warn':'stat-danger';
+  var html='<div class="stat-grid">'
+    +'<div class="stat-card"><div class="stat-label">Total Records</div><div class="stat-value">'+b.total+'</div></div>'
+    +'<div class="stat-card"><div class="stat-label">Total Revenue</div><div class="stat-value" style="font-size:20px;">₹'+b.totalRevenue.toLocaleString('en-IN',{maximumFractionDigits:0})+'</div></div>'
+    +'<div class="stat-card stat-danger"><div class="stat-label">Flagged Records</div><div class="stat-value">'+b.flaggedCount+'</div><div class="stat-sub">'+((b.flaggedCount/b.total)*100).toFixed(1)+'% of total</div></div>'
+    +'<div class="stat-card '+sc+'"><div class="stat-label">Billing Compliance</div><div class="stat-value">'+b.score+'%</div></div>'
+    +'<div class="stat-card stat-warn"><div class="stat-label">Calc Errors</div><div class="stat-value">'+b.calcErrors.length+'</div></div>'
+    +'<div class="stat-card stat-warn"><div class="stat-label">High Discounts &gt;30%</div><div class="stat-value">'+b.highDiscount.length+'</div></div>'
+    +'<div class="stat-card stat-danger"><div class="stat-label">Overbilling Cases</div><div class="stat-value">'+b.overbilling.length+'</div></div>'
+    +'<div class="stat-card stat-danger"><div class="stat-label">Duplicate Bills</div><div class="stat-value">'+b.duplicates.length+'</div></div>'
+    +'</div>';
+  if(b.calcErrors.length>0){
+    html+='<div class="card"><div class="card-title">❌ Calculation Mismatch ('+b.calcErrors.length+')</div><div class="table-wrap"><table><thead><tr><th>Bill ID</th><th>Medicine</th><th>Qty</th><th>Unit Price</th><th>Disc%</th><th>Expected</th><th>Billed</th><th>Diff</th><th>Billed By</th></tr></thead><tbody>';
+    b.calcErrors.slice(0,15).forEach(function(r){var exp=parseFloat((r.quantity*r.unit_price*(1-r.discount_pct/100)).toFixed(2));var diff=parseFloat((r.total_amount-exp).toFixed(2));html+='<tr><td>'+r.bill_id+'</td><td>'+r.medicine_name+'</td><td>'+r.quantity+'</td><td>₹'+r.unit_price+'</td><td>'+r.discount_pct+'%</td><td>₹'+exp+'</td><td>₹'+r.total_amount+'</td><td><span class="pill '+(diff>0?'pill-danger':'pill-warn')+'">'+(diff>0?'+':'')+'₹'+diff+'</span></td><td>'+r.billed_by+'</td></tr>';});
+    html+='</tbody></table></div></div>';
+  }
+  if(b.highDiscount.length>0){
+    html+='<div class="card"><div class="card-title">⚠️ High Discount &gt;30% ('+b.highDiscount.length+')</div><div class="table-wrap"><table><thead><tr><th>Bill ID</th><th>Medicine</th><th>Discount %</th><th>Total Amt</th><th>Billed By</th><th>Date</th></tr></thead><tbody>';
+    b.highDiscount.slice(0,15).forEach(function(r){html+='<tr><td>'+r.bill_id+'</td><td>'+r.medicine_name+'</td><td><span class="pill pill-danger">'+r.discount_pct+'%</span></td><td>₹'+r.total_amount+'</td><td>'+r.billed_by+'</td><td>'+r.date+'</td></tr>';});
+    html+='</tbody></table></div></div>';
+  }
+  html+='<div class="card"><div class="card-title">👥 Staff Billing Summary</div><div class="table-wrap"><table><thead><tr><th>Staff</th><th>Bills</th><th>% of Total</th><th>Status</th></tr></thead><tbody>';
+  var staffArr=Object.keys(b.staffMap).map(function(k){return[k,b.staffMap[k]];}).sort(function(a,b){return b[1]-a[1];});
+  staffArr.forEach(function(arr){var pct=((arr[1]/b.total)*100).toFixed(1);html+='<tr><td>'+arr[0]+'</td><td>'+arr[1]+'</td><td>'+pct+'%</td><td>'+(arr[1]>30?'<span class="pill pill-warn">High Volume</span>':'<span class="pill pill-ok">Normal</span>')+'</td></tr>';});
+  html+='</tbody></table></div></div>';
+  document.getElementById('billing-content').innerHTML=html;
+}
+
+function renderSecurityTab(s){
+  var sc=s.score>=80?'stat-ok':s.score>=60?'stat-warn':'stat-danger';
+  var html='<div class="stat-grid">'
+    +'<div class="stat-card stat-danger"><div class="stat-label">Unknown Role Entries</div><div class="stat-value">'+s.unknownRole.length+'</div></div>'
+    +'<div class="stat-card stat-danger"><div class="stat-label">No Prescription</div><div class="stat-value">'+s.noPrescription.length+'</div><div class="stat-sub">Controlled drugs</div></div>'
+    +'<div class="stat-card stat-warn"><div class="stat-label">Batch Unverified</div><div class="stat-value">'+s.noBatch.length+'</div></div>'
+    +'<div class="stat-card stat-warn"><div class="stat-label">Unauth &gt;₹5k</div><div class="stat-value">'+s.unauthorizedHighValue.length+'</div></div>'
+    +'<div class="stat-card stat-warn"><div class="stat-label">Multi-Role Staff</div><div class="stat-value">'+s.multiRole.length+'</div></div>'
+    +'<div class="stat-card '+sc+'"><div class="stat-label">Security Compliance</div><div class="stat-value">'+s.score+'%</div></div>'
+    +'</div>';
+  var riskMap={pharmacist:'<span class="pill pill-ok">Low</span>',cashier:'<span class="pill pill-ok">Low</span>',manager:'<span class="pill pill-info">Medium</span>',admin:'<span class="pill pill-warn">High</span>',unknown:'<span class="pill pill-danger">Critical</span>'};
+  html+='<div class="card"><div class="card-title">🔑 Access Role Distribution</div><div class="table-wrap"><table><thead><tr><th>Role</th><th>Count</th><th>% Share</th><th>Risk</th></tr></thead><tbody>';
+  Object.keys(s.roleMap).forEach(function(role){html+='<tr><td>'+role+'</td><td>'+s.roleMap[role]+'</td><td>'+((s.roleMap[role]/s.total)*100).toFixed(1)+'%</td><td>'+(riskMap[role]||'<span class="pill pill-warn">Review</span>')+'</td></tr>';});
+  html+='</tbody></table></div></div>';
+  if(s.noPrescription.length>0){
+    html+='<div class="card"><div class="card-title">🚫 Missing Prescription — Controlled Drugs ('+s.noPrescription.length+')</div><div class="table-wrap"><table><thead><tr><th>Bill ID</th><th>Medicine</th><th>Patient</th><th>Billed By</th><th>Date</th></tr></thead><tbody>';
+    s.noPrescription.slice(0,15).forEach(function(r){html+='<tr><td>'+r.bill_id+'</td><td>'+r.medicine_name+'</td><td>'+r.patient_id+'</td><td>'+r.billed_by+'</td><td>'+r.date+'</td></tr>';});
+    html+='</tbody></table></div></div>';
+  }
+  if(s.multiRole.length>0){
+    html+='<div class="card"><div class="card-title">⚠️ Multi-Role Staff ('+s.multiRole.length+')</div><div class="table-wrap"><table><thead><tr><th>Staff</th><th>Roles</th><th>Action</th></tr></thead><tbody>';
+    s.multiRole.forEach(function(x){html+='<tr><td>'+x.name+'</td><td>'+x.roles.join(', ')+'</td><td><span class="pill pill-warn">Investigate</span></td></tr>';});
+    html+='</tbody></table></div></div>';
+  }
+  document.getElementById('security-content').innerHTML=html;
+}
+
+function renderStatsTab(st,billing,security){
+  var ds=st.descStats;
+  var fmtC=function(v){return isNaN(v)?'—':'₹'+Number(v).toLocaleString('en-IN',{maximumFractionDigits:2});};
+  var fmt=function(v){return isNaN(v)?'—':Number(v).toLocaleString('en-IN',{maximumFractionDigits:2});};
+
+  var html='<div class="sec-heading">📐 Descriptive Statistics</div>'
+    +'<div class="kpi-row">'
+    +'<div class="kpi-box"><div class="kpi-val">'+fmtC(ds.amount.mean)+'</div><div class="kpi-lbl">Mean Transaction</div></div>'
+    +'<div class="kpi-box"><div class="kpi-val">'+fmtC(ds.amount.median)+'</div><div class="kpi-lbl">Median Transaction</div></div>'
+    +'<div class="kpi-box"><div class="kpi-val">'+fmtC(ds.amount.std)+'</div><div class="kpi-lbl">Std Deviation</div></div>'
+    +'<div class="kpi-box"><div class="kpi-val">'+fmtC(ds.amount.min)+'</div><div class="kpi-lbl">Min Amount</div></div>'
+    +'<div class="kpi-box"><div class="kpi-val">'+fmtC(ds.amount.max)+'</div><div class="kpi-lbl">Max Amount</div></div>'
+    +'<div class="kpi-box"><div class="kpi-val">'+fmtC(ds.amount.p25)+'</div><div class="kpi-lbl">25th Percentile</div></div>'
+    +'<div class="kpi-box"><div class="kpi-val">'+fmtC(ds.amount.p75)+'</div><div class="kpi-lbl">75th Percentile</div></div>'
+    +'<div class="kpi-box"><div class="kpi-val">'+fmtC(ds.amount.p95)+'</div><div class="kpi-lbl">95th Percentile</div></div>'
+    +'<div class="kpi-box"><div class="kpi-val">'+st.anomalyRate+'%</div><div class="kpi-lbl">Anomaly Rate</div></div>'
+    +'<div class="kpi-box"><div class="kpi-val">'+fmtC(st.revenueAtRisk)+'</div><div class="kpi-lbl">Revenue at Risk</div></div>'
+    +'</div>';
+
+  html+='<div class="card"><div class="card-title">📋 Full Descriptive Statistics Table</div><div class="table-wrap"><table>'
+    +'<thead><tr><th>Metric</th><th>Total Amount (₹)</th><th>Unit Price (₹)</th><th>Discount %</th><th>Quantity</th></tr></thead>'
+    +'<tbody>'
+    +'<tr><td><strong>Mean</strong></td><td>'+fmtC(ds.amount.mean)+'</td><td>'+fmtC(ds.price.mean)+'</td><td>'+fmt(ds.discount.mean)+'%</td><td>'+fmt(ds.qty.mean)+'</td></tr>'
+    +'<tr><td><strong>Median</strong></td><td>'+fmtC(ds.amount.median)+'</td><td>'+fmtC(ds.price.median)+'</td><td>'+fmt(ds.discount.median)+'%</td><td>'+fmt(ds.qty.median)+'</td></tr>'
+    +'<tr><td><strong>Std Dev</strong></td><td>'+fmtC(ds.amount.std)+'</td><td>'+fmtC(ds.price.std)+'</td><td>'+fmt(ds.discount.std)+'%</td><td>'+fmt(ds.qty.std)+'</td></tr>'
+    +'<tr><td><strong>Min</strong></td><td>'+fmtC(ds.amount.min)+'</td><td>'+fmtC(ds.price.min)+'</td><td>0%</td><td>1</td></tr>'
+    +'<tr><td><strong>Max</strong></td><td>'+fmtC(ds.amount.max)+'</td><td>'+fmtC(ds.price.max)+'</td><td>'+fmt(ds.discount.max)+'%</td><td>'+fmt(ds.qty.max)+'</td></tr>'
+    +'<tr><td><strong>P25</strong></td><td>'+fmtC(ds.amount.p25)+'</td><td>—</td><td>—</td><td>—</td></tr>'
+    +'<tr><td><strong>P75</strong></td><td>'+fmtC(ds.amount.p75)+'</td><td>—</td><td>—</td><td>—</td></tr>'
+    +'<tr><td><strong>P95</strong></td><td>'+fmtC(ds.amount.p95)+'</td><td>—</td><td>—</td><td>—</td></tr>'
+    +'</tbody></table></div></div>';
+
+  html+='<div class="sec-heading">📈 Revenue &amp; Error Trend Analysis</div>'
+    +'<div class="chart-grid">'
+    +'<div class="card"><div class="card-title">Monthly Revenue Trend</div><div class="chart-wrap"><canvas id="chart-revenue"></canvas></div></div>'
+    +'<div class="card"><div class="card-title">Monthly Error Rate (%)</div><div class="chart-wrap"><canvas id="chart-errorrate"></canvas></div></div>'
+    +'</div>';
+
+  html+='<div class="sec-heading">💊 Medicine Analysis</div>'
+    +'<div class="chart-grid">'
+    +'<div class="card"><div class="card-title">Top 10 Medicines by Frequency</div><div class="chart-wrap"><canvas id="chart-topmed"></canvas></div></div>'
+    +'<div class="card"><div class="card-title">Top 8 Medicines by Revenue (₹)</div><div class="chart-wrap"><canvas id="chart-medrev"></canvas></div></div>'
+    +'</div>';
+
+  html+='<div class="sec-heading">📊 Distribution Analysis</div>'
+    +'<div class="chart-grid">'
+    +'<div class="card"><div class="card-title">Discount % Distribution</div><div class="chart-wrap"><canvas id="chart-disc"></canvas></div></div>'
+    +'<div class="card"><div class="card-title">Transaction Amount Distribution (₹)</div><div class="chart-wrap"><canvas id="chart-amt"></canvas></div></div>'
+    +'</div>';
+
+  html+='<div class="sec-heading">🔒 Compliance &amp; Risk Breakdown</div>'
+    +'<div class="chart-grid-3">'
+    +'<div class="card"><div class="card-title">Billing Issues Breakdown</div><div class="chart-wrap-sm"><canvas id="chart-billpie"></canvas></div></div>'
+    +'<div class="card"><div class="card-title">Security Flags Breakdown</div><div class="chart-wrap-sm"><canvas id="chart-secpie"></canvas></div></div>'
+    +'<div class="card"><div class="card-title">Access Role Distribution</div><div class="chart-wrap-sm"><canvas id="chart-rolepie"></canvas></div></div>'
+    +'</div>';
+
+  html+='<div class="sec-heading">👥 Staff Performance Analysis</div>'
+    +'<div class="chart-grid">'
+    +'<div class="card"><div class="card-title">Staff — Bill Count vs Revenue (₹)</div><div class="chart-wrap"><canvas id="chart-staffbar"></canvas></div></div>'
+    +'<div class="card"><div class="card-title">Staff — Error Rate (%)</div><div class="chart-wrap"><canvas id="chart-stafferror"></canvas></div></div>'
+    +'</div>';
+
+  html+='<div class="card"><div class="card-title">📋 Staff Detailed Performance</div><div class="table-wrap"><table>'
+    +'<thead><tr><th>Staff</th><th>Total Bills</th><th>Total Revenue</th><th>Errors</th><th>Error Rate</th><th>Discount Bills</th><th>Rating</th></tr></thead>'
+    +'<tbody id="staff-table-body"></tbody></table></div></div>';
+
+  html+='<div class="sec-heading">🔍 Discount vs Amount Correlation</div>'
+    +'<div class="card"><div class="card-title">Scatter Plot — Discount % vs Total Amount (first 60 records)</div>'
+    +'<div class="chart-wrap-lg"><canvas id="chart-scatter"></canvas></div>'
+    +'<p style="font-size:12px;color:var(--muted);margin-top:8px;">Each point = one transaction. Clusters at high discount + high amount indicate potential fraud.</p></div>';
+
+  html+='<div class="sec-heading">📅 Monthly Volume &amp; Revenue Combo</div>'
+    +'<div class="card"><div class="card-title">Transactions Count + Revenue by Month</div>'
+    +'<div class="chart-wrap-lg"><canvas id="chart-monthly-combo"></canvas></div></div>';
+
+  document.getElementById('stats-content').innerHTML=html;
+
+  setTimeout(function(){
+    destroyCharts();
+    var months=st.months;
+    var revenues=months.map(function(m){return Math.round(st.monthlyMap[m].revenue);});
+    var counts=months.map(function(m){return st.monthlyMap[m].count;});
+    var shortMonths=months.map(function(m){var d=new Date(m+'-01');return d.toLocaleString('en-IN',{month:'short',year:'2-digit'});});
+
+    mkLine('chart-revenue',shortMonths,revenues,'Revenue (₹)','#0ea5e9');
+    mkBar('chart-errorrate',shortMonths,st.errorRateByMonth.map(function(e){return parseFloat(e.errorRate);}),['Error Rate %'],'#dc2626');
+    mkBarH('chart-topmed',st.topMeds.map(function(m){return m[0];}),st.topMeds.map(function(m){return m[1];}),'Count','#2563a8');
+    mkBarH('chart-medrev',st.topMedRev.map(function(m){return m[0];}),st.topMedRev.map(function(m){return Math.round(m[1]);}), 'Revenue ₹','#16a34a');
+    mkDoughnut('chart-disc',Object.keys(st.discBuckets),Object.values(st.discBuckets),'Bills',['#94a3b8','#0ea5e9','#2563a8','#d97706','#dc2626','#7c3aed']);
+    mkBar('chart-amt',Object.keys(st.amtBuckets),Object.values(st.amtBuckets),'Transactions','#0f766e');
+    mkPie('chart-billpie',['Calc Errors','High Discount','Overbilling','Duplicates','Zero/Invalid'],[billing.calcErrors.length,billing.highDiscount.length,billing.overbilling.length,billing.duplicates.length,billing.zeroVal.length],['#ef4444','#f59e0b','#f97316','#8b5cf6','#64748b']);
+    mkPie('chart-secpie',['Unknown Role','No Prescription','No Batch','Unauth >5k','Multi-Role'],[security.unknownRole.length,security.noPrescription.length,security.noBatch.length,security.unauthorizedHighValue.length,security.multiRole.length],['#dc2626','#d97706','#0ea5e9','#7c3aed','#64748b']);
+    mkDoughnut('chart-rolepie',Object.keys(security.roleMap),Object.values(security.roleMap),'Count',['#2563a8','#16a34a','#d97706','#dc2626','#64748b','#7c3aed']);
+
+    var staffNames=Object.keys(st.staffStats);
+    var staffRevs=staffNames.map(function(n){return Math.round(st.staffStats[n].revenue);});
+    var staffCounts=staffNames.map(function(n){return st.staffStats[n].count;});
+    chartInstances['chart-staffbar']=new Chart(document.getElementById('chart-staffbar'),{
+      type:'bar',
+      data:{labels:staffNames,datasets:[
+        {label:'Bills',data:staffCounts,backgroundColor:'rgba(14,165,233,0.8)',yAxisID:'y1'},
+        {label:'Revenue ₹',data:staffRevs,backgroundColor:'rgba(22,163,74,0.8)',yAxisID:'y2'},
+      ]},
+      options:{responsive:true,maintainAspectRatio:false,scales:{y1:{type:'linear',position:'left',title:{display:true,text:'Bills'}},y2:{type:'linear',position:'right',title:{display:true,text:'Revenue (₹)'},grid:{drawOnChartArea:false}}},plugins:{legend:{position:'top'}}}
+    });
+
+    var staffErrRates=staffNames.map(function(n){var s=st.staffStats[n];return s.count>0?parseFloat(((s.errors/s.count)*100).toFixed(1)):0;});
+    mkBar('chart-stafferror',staffNames,staffErrRates,'Error Rate %','#dc2626');
+
+    var tbody='';
+    staffNames.forEach(function(n){
+      var s=st.staffStats[n];var er=s.count>0?((s.errors/s.count)*100).toFixed(1):0;
+      var perf=er>10?'<span class="pill pill-danger">High Risk</span>':er>5?'<span class="pill pill-warn">Review</span>':'<span class="pill pill-ok">Good</span>';
+      tbody+='<tr><td>'+n+'</td><td>'+s.count+'</td><td>₹'+s.revenue.toLocaleString('en-IN',{maximumFractionDigits:0})+'</td><td>'+s.errors+'</td><td>'+er+'%</td><td>'+s.discounts+'</td><td>'+perf+'</td></tr>';
+    });
+    document.getElementById('staff-table-body').innerHTML=tbody;
+
+    chartInstances['chart-scatter']=new Chart(document.getElementById('chart-scatter'),{
+      type:'scatter',
+      data:{datasets:[{label:'Transaction',data:st.scatter,backgroundColor:'rgba(37,99,168,0.5)',pointRadius:6,pointHoverRadius:8}]},
+      options:{responsive:true,maintainAspectRatio:false,scales:{x:{title:{display:true,text:'Discount %'}},y:{title:{display:true,text:'Total Amount (₹)'}}},plugins:{legend:{display:false}}}
+    });
+
+    chartInstances['chart-monthly-combo']=new Chart(document.getElementById('chart-monthly-combo'),{
+      type:'bar',
+      data:{labels:shortMonths,datasets:[
+        {type:'bar',label:'Transaction Count',data:counts,backgroundColor:'rgba(14,165,233,0.6)',yAxisID:'y1'},
+        {type:'line',label:'Revenue (₹)',data:revenues,borderColor:'#16a34a',backgroundColor:'rgba(22,163,74,0.1)',fill:true,tension:0.4,yAxisID:'y2',pointRadius:4},
+      ]},
+      options:{responsive:true,maintainAspectRatio:false,scales:{y1:{type:'linear',position:'left',title:{display:true,text:'Count'}},y2:{type:'linear',position:'right',title:{display:true,text:'Revenue (₹)'},grid:{drawOnChartArea:false}}},plugins:{legend:{position:'top'}}}
+    });
+  },150);
+}
+
+function destroyCharts(){Object.keys(chartInstances).forEach(function(k){try{chartInstances[k].destroy();}catch(e){}});chartInstances={};}
+
+function mkLine(id,labels,data,label,color){
+  var ctx=document.getElementById(id);if(!ctx)return;
+  chartInstances[id]=new Chart(ctx,{type:'line',data:{labels:labels,datasets:[{label:label,data:data,borderColor:color,backgroundColor:color+'26',fill:true,tension:0.4,pointRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{maxRotation:45,font:{size:11}}},y:{ticks:{font:{size:11}}}}}});
+}
+function mkBar(id,labels,data,label,color){
+  var ctx=document.getElementById(id);if(!ctx)return;
+  chartInstances[id]=new Chart(ctx,{type:'bar',data:{labels:labels,datasets:[{label:label,data:data,backgroundColor:color+'cc'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{maxRotation:45,font:{size:11}}},y:{ticks:{font:{size:11}}}}}});
+}
+function mkBarH(id,labels,data,label,color){
+  var ctx=document.getElementById(id);if(!ctx)return;
+  chartInstances[id]=new Chart(ctx,{type:'bar',data:{labels:labels,datasets:[{label:label,data:data,backgroundColor:color+'cc'}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{ticks:{font:{size:10}}},y:{ticks:{font:{size:10}}}}}});
+}
+function mkPie(id,labels,data,colors){
+  var ctx=document.getElementById(id);if(!ctx)return;
+  chartInstances[id]=new Chart(ctx,{type:'pie',data:{labels:labels,datasets:[{data:data,backgroundColor:colors}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{size:10},boxWidth:12}}}}});
+}
+function mkDoughnut(id,labels,data,label,colors){
+  var ctx=document.getElementById(id);if(!ctx)return;
+  chartInstances[id]=new Chart(ctx,{type:'doughnut',data:{labels:labels,datasets:[{label:label,data:data,backgroundColor:colors}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{size:10},boxWidth:12}}}}});
+}
+
+function renderReportTab(results){
+  var b=results.billing,s=results.security,st=results.stats,m=results.meta;
+  var os=Math.round((b.score+s.score)/2);
+  var sc=os>=80?'#16a34a':os>=60?'#d97706':'#dc2626';
+  var sl=os>=80?'COMPLIANT':os>=60?'NEEDS REVIEW':'HIGH RISK';
+
+  var html='<div class="report-header"><h2>📋 Pharmacy Audit Report</h2><p>'+m.pharmacyName+' &nbsp;|&nbsp; Auditor: '+m.auditorName+'</p>'
+    +'<div class="report-meta"><span>📅 '+m.auditDate+'</span><span>📊 '+m.period+'</span><span>🗃️ '+m.totalRecords+' records</span><span>🕒 '+m.generatedAt+'</span></div></div>';
+
+  html+='<div class="stat-grid">'
+    +'<div class="stat-card" style="text-align:center;"><div class="stat-label">Overall Audit Score</div><div class="stat-value" style="color:'+sc+';font-size:36px;">'+os+'%</div><div class="stat-sub"><span class="pill '+(os>=80?'pill-ok':os>=60?'pill-warn':'pill-danger')+'">'+sl+'</span></div></div>'
+    +'<div class="stat-card stat-'+(b.score>=80?'ok':b.score>=60?'warn':'danger')+'"><div class="stat-label">Billing Compliance</div><div class="stat-value">'+b.score+'%</div><div class="stat-sub">'+b.flaggedCount+' issues</div></div>'
+    +'<div class="stat-card stat-'+(s.score>=80?'ok':s.score>=60?'warn':'danger')+'"><div class="stat-label">Security Compliance</div><div class="stat-value">'+s.score+'%</div><div class="stat-sub">'+s.flaggedCount+' issues</div></div>'
+    +'<div class="stat-card"><div class="stat-label">Revenue Audited</div><div class="stat-value" style="font-size:18px;">₹'+b.totalRevenue.toLocaleString('en-IN',{maximumFractionDigits:0})+'</div></div>'
+    +'<div class="stat-card stat-danger"><div class="stat-label">Revenue at Risk</div><div class="stat-value" style="font-size:18px;">₹'+Number(st.revenueAtRisk).toLocaleString('en-IN',{maximumFractionDigits:0})+'</div></div>'
+    +'<div class="stat-card stat-warn"><div class="stat-label">Anomaly Rate</div><div class="stat-value">'+st.anomalyRate+'%</div></div>'
+    +'</div>';
+
+  html+='<div class="card"><div class="card-title">🔎 Key Findings</div>';
+  var findings=[];
+  if(b.calcErrors.length>0)findings.push({sev:'critical',text:b.calcErrors.length+' billing calculation errors detected — possible fraud or data entry mistakes.'});
+  if(b.overbilling.length>0)findings.push({sev:'critical',text:b.overbilling.length+' overbilling cases where charged amount exceeds computed by >20%.'});
+  if(b.duplicates.length>0)findings.push({sev:'critical',text:b.duplicates.length+' duplicate bill IDs — risk of double-billing patients.'});
+  if(s.unknownRole.length>0)findings.push({sev:'critical',text:s.unknownRole.length+' transactions by unknown roles — unauthorized access suspected.'});
+  if(s.noPrescription.length>0)findings.push({sev:'critical',text:s.noPrescription.length+' controlled drug dispensing without prescriptions — regulatory violation.'});
+  if(b.highDiscount.length>0)findings.push({sev:'moderate',text:b.highDiscount.length+' transactions with discounts >30% — needs management approval verification.'});
+  if(s.noBatch.length>0)findings.push({sev:'moderate',text:s.noBatch.length+' medicines dispensed without batch verification.'});
+  if(s.multiRole.length>0)findings.push({sev:'moderate',text:s.multiRole.length+' staff members with multiple access roles — review permissions.'});
+  if(!findings.length)findings.push({sev:'low',text:'No critical issues found. Audit result is satisfactory.'});
+  findings.forEach(function(f){html+='<div class="finding finding-'+f.sev+'"><strong>'+f.sev.toUpperCase()+':</strong> '+f.text+'</div>';});
+  html+='</div>';
+
+  html+='<div class="card"><div class="card-title">📐 Statistical Highlights</div><div class="table-wrap"><table><thead><tr><th>Metric</th><th>Value</th><th>Interpretation</th></tr></thead><tbody>'
+    +'<tr><td>Mean Transaction</td><td>₹'+Number(st.avgTransactionValue).toFixed(2)+'</td><td>Average billing amount per record</td></tr>'
+    +'<tr><td>Std Deviation</td><td>₹'+st.descStats.amount.std.toFixed(2)+'</td><td>'+(st.descStats.amount.std>1000?'High variance — check outliers':'Moderate spread')+'</td></tr>'
+    +'<tr><td>95th Percentile</td><td>₹'+st.descStats.amount.p95.toFixed(2)+'</td><td>Top 5% of transactions exceed this</td></tr>'
+    +'<tr><td>Mean Discount</td><td>'+st.descStats.discount.mean.toFixed(1)+'%</td><td>'+(st.descStats.discount.mean>20?'Above normal — review discount policy':'Within acceptable range')+'</td></tr>'
+    +'<tr><td>Anomaly Rate</td><td>'+st.anomalyRate+'%</td><td>'+(st.anomalyRate>10?'High — immediate review needed':'Acceptable')+'</td></tr>'
+    +'<tr><td>Revenue at Risk</td><td>₹'+Number(st.revenueAtRisk).toLocaleString('en-IN',{maximumFractionDigits:0})+'</td><td>From identified overbilling cases</td></tr>'
+    +'</tbody></table></div></div>';
+
+  html+='<div class="card"><div class="card-title">✅ Recommendations</div><div class="table-wrap"><table><thead><tr><th>#</th><th>Area</th><th>Action Required</th><th>Priority</th></tr></thead><tbody>'
+    +'<tr><td>1</td><td>Billing</td><td>Implement automated total calculation validation before bill generation</td><td><span class="pill pill-danger">Critical</span></td></tr>'
+    +'<tr><td>2</td><td>Access Control</td><td>Remove or reassign all unknown role accounts immediately</td><td><span class="pill pill-danger">Critical</span></td></tr>'
+    +'<tr><td>3</td><td>Prescription</td><td>Enable mandatory prescription upload for controlled substances</td><td><span class="pill pill-danger">Critical</span></td></tr>'
+    +'<tr><td>4</td><td>Discount Policy</td><td>Require manager approval for discounts exceeding 30%</td><td><span class="pill pill-warn">High</span></td></tr>'
+    +'<tr><td>5</td><td>Batch Tracking</td><td>Enable batch number scanning at point-of-sale</td><td><span class="pill pill-info">Medium</span></td></tr>'
+    +'<tr><td>6</td><td>Staff Monitoring</td><td>Restrict cashiers from processing transactions above ₹5,000</td><td><span class="pill pill-warn">High</span></td></tr>'
+    +'<tr><td>7</td><td>Audit Trail</td><td>Enable timestamped logs for all billing modifications</td><td><span class="pill pill-info">Medium</span></td></tr>'
+    +'<tr><td>8</td><td>Training</td><td>Monthly training for billing staff on compliance procedures</td><td><span class="pill pill-ok">Low</span></td></tr>'
+    +'</tbody></table></div></div>';
+
+  if(m.remarks){html+='<div class="card"><div class="card-title">📝 Auditor Remarks</div><p style="font-size:13px;line-height:1.7;">'+m.remarks+'</p></div>';}
+
+  html+='<div class="btn-group">'
+    +'<button class="btn btn-primary" onclick="downloadPDFReport()">📄 Download PDF Report</button>'
+    +'<button class="btn btn-success" onclick="downloadExcelReport()">📊 Download Excel Report</button>'
+    +'<button class="btn btn-outline" onclick="window.print()">🖨️ Print</button>'
+    +'</div>';
+
+  document.getElementById('report-content').innerHTML=html;
+}
+
+function downloadPDFReport(){
+  if(!auditResults.meta){alert('Run audit first.');return;}
+  var jsPDF=window.jspdf.jsPDF;
+  var doc=new jsPDF();
+  var b=auditResults.billing,s=auditResults.security,st=auditResults.stats,m=auditResults.meta;
+  doc.setFillColor(26,74,110);doc.rect(0,0,210,40,'F');
+  doc.setTextColor(255,255,255);doc.setFontSize(18);doc.setFont('helvetica','bold');
+  doc.text('PharmAudit Pro — Audit Report',14,18);
+  doc.setFontSize(9);doc.setFont('helvetica','normal');
+  doc.text(m.pharmacyName+'  |  Auditor: '+m.auditorName+'  |  '+m.auditDate+'  |  '+m.period,14,30);
+  doc.text('Records: '+m.totalRecords+'  |  Generated: '+m.generatedAt,14,37);
+  doc.setTextColor(0,0,0);
+  var os=Math.round((b.score+s.score)/2);
+  doc.setFontSize(12);doc.setFont('helvetica','bold');doc.text('Compliance Scores',14,52);
+  doc.autoTable({startY:56,head:[['Metric','Score','Status']],body:[['Overall Audit',os+'%',os>=80?'COMPLIANT':os>=60?'NEEDS REVIEW':'HIGH RISK'],['Billing',b.score+'%',b.score>=80?'OK':b.score>=60?'Review':'Critical'],['Security',s.score+'%',s.score>=80?'OK':s.score>=60?'Review':'Critical']],margin:{left:14},styles:{fontSize:10}});
+  doc.setFontSize(12);doc.setFont('helvetica','bold');doc.text('Statistical Summary',14,doc.lastAutoTable.finalY+12);
+  doc.autoTable({startY:doc.lastAutoTable.finalY+16,head:[['Metric','Value']],body:[['Mean Transaction','Rs.'+Number(st.avgTransactionValue).toFixed(2)],['Median Transaction','Rs.'+st.descStats.amount.median.toFixed(2)],['Std Deviation','Rs.'+st.descStats.amount.std.toFixed(2)],['95th Percentile','Rs.'+st.descStats.amount.p95.toFixed(2)],['Mean Discount',st.descStats.discount.mean.toFixed(1)+'%'],['Anomaly Rate',st.anomalyRate+'%'],['Revenue at Risk','Rs.'+Number(st.revenueAtRisk).toFixed(2)],['Total Revenue Audited','Rs.'+b.totalRevenue.toFixed(2)]],margin:{left:14},styles:{fontSize:10}});
+  doc.setFontSize(12);doc.setFont('helvetica','bold');doc.text('Billing Issues',14,doc.lastAutoTable.finalY+12);
+  doc.autoTable({startY:doc.lastAutoTable.finalY+16,head:[['Issue','Count']],body:[['Calculation Errors',b.calcErrors.length],['Overbilling Cases',b.overbilling.length],['High Discounts >30%',b.highDiscount.length],['Duplicate Bills',b.duplicates.length],['Zero/Invalid Values',b.zeroVal.length]],margin:{left:14},styles:{fontSize:10}});
+  doc.setFontSize(12);doc.setFont('helvetica','bold');doc.text('Security Issues',14,doc.lastAutoTable.finalY+12);
+  doc.autoTable({startY:doc.lastAutoTable.finalY+16,head:[['Issue','Count']],body:[['Unknown Role',s.unknownRole.length],['No Prescription',s.noPrescription.length],['Batch Unverified',s.noBatch.length],['Unauth High-Value',s.unauthorizedHighValue.length],['Multi-Role Staff',s.multiRole.length]],margin:{left:14},styles:{fontSize:10}});
+  if(m.remarks){doc.setFontSize(11);doc.setFont('helvetica','bold');doc.text('Auditor Remarks:',14,doc.lastAutoTable.finalY+14);doc.setFont('helvetica','normal');doc.setFontSize(10);doc.text(doc.splitTextToSize(m.remarks,180),14,doc.lastAutoTable.finalY+22);}
+  doc.setFontSize(8);doc.setTextColor(120,120,120);doc.text('Generated by PharmAudit Pro v2.0 — For internal use only',14,290);
+  doc.save('PharmAudit_Report_'+m.auditDate+'.pdf');
+}
+
+function downloadExcelReport(){
+  if(!auditResults.meta){alert('Run audit first.');return;}
+  var b=auditResults.billing,s=auditResults.security,st=auditResults.stats,m=auditResults.meta;
+  var wb=XLSX.utils.book_new();
+  var summary=[['PHARMA AUDIT REPORT — PharmAudit Pro v2.0'],[],['Pharmacy',m.pharmacyName,'','Auditor',m.auditorName],['Audit Date',m.auditDate,'','Period',m.period],['Total Records',m.totalRecords,'','Generated',m.generatedAt],[],['COMPLIANCE SCORES'],['Metric','Score'],['Overall',Math.round((b.score+s.score)/2)+'%'],['Billing',b.score+'%'],['Security',s.score+'%'],[],['STATISTICAL SUMMARY'],['Metric','Value'],['Mean Transaction','Rs.'+Number(st.avgTransactionValue).toFixed(2)],['Median Transaction','Rs.'+st.descStats.amount.median.toFixed(2)],['Std Deviation','Rs.'+st.descStats.amount.std.toFixed(2)],['P95','Rs.'+st.descStats.amount.p95.toFixed(2)],['Mean Discount',st.descStats.discount.mean.toFixed(1)+'%'],['Anomaly Rate',st.anomalyRate+'%'],['Revenue at Risk','Rs.'+Number(st.revenueAtRisk).toFixed(2)],['Total Revenue','Rs.'+b.totalRevenue.toFixed(2)],[],['BILLING ISSUES'],['Issue','Count'],['Calc Errors',b.calcErrors.length],['Overbilling',b.overbilling.length],['High Discounts >30%',b.highDiscount.length],['Duplicates',b.duplicates.length],['Zero/Invalid',b.zeroVal.length],[],['SECURITY ISSUES'],['Issue','Count'],['Unknown Role',s.unknownRole.length],['No Prescription',s.noPrescription.length],['No Batch',s.noBatch.length],['Unauth High-Value',s.unauthorizedHighValue.length],['Multi-Role Staff',s.multiRole.length]];
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(summary),'Summary');
+  var hdr=['bill_id','patient_id','medicine_name','quantity','unit_price','total_amount','discount_pct','billed_by','date','access_role','prescription','batch_verified'];
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet([hdr].concat(auditData.map(function(r){return hdr.map(function(h){return r[h];});}))),'Full Dataset');
+  if(b.calcErrors.length>0){var eh=['bill_id','medicine','qty','unit_price','disc%','expected','billed','diff','billed_by'];XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet([eh].concat(b.calcErrors.map(function(r){var exp=parseFloat((r.quantity*r.unit_price*(1-r.discount_pct/100)).toFixed(2));return[r.bill_id,r.medicine_name,r.quantity,r.unit_price,r.discount_pct,exp,r.total_amount,parseFloat((r.total_amount-exp).toFixed(2)),r.billed_by];}))),'Calc Errors');}
+  var sh=['Staff','Bills','Revenue','Errors','Error Rate %','Discount Bills'];
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet([sh].concat(Object.keys(st.staffStats).map(function(n){var ss=st.staffStats[n];return[n,ss.count,parseFloat(ss.revenue.toFixed(2)),ss.errors,ss.count>0?parseFloat(((ss.errors/ss.count)*100).toFixed(1)):0,ss.discounts];}))),'Staff Performance');
+  XLSX.writeFile(wb,'PharmAudit_Report_'+m.auditDate+'.xlsx');
+}
+</script>
+
+</body></html>
